@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# RxJs e Angular: Programando de forma reativa
+
+## Primeira parte: Programação reativa
+
+- Utilizar a arquitetura de componentes de apresentação e componentes inteligentes;
+- Lidar com a biblioteca RxJS;
+- Aplicar o padrão Observer.
+
