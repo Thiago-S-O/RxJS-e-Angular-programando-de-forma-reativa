@@ -40,3 +40,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Desinscrever-se do observable através do unsubscribe;
 - Adequar a resposta da API para o formato necessário.
 
+## Terceira parte: Operadores RxJs
+
+- Utilizar o operador pipe para agrupar múltiplos operadores;
+- Utilizar o operador tap para fazer debugging na aplicação;
+- Transformar o fluxo de dados com o operador map.
+

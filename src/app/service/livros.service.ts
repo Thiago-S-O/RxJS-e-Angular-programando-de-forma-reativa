@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ResultsBooks } from '../models/interfaces';
+import { map, Observable, tap } from 'rxjs';
+import { Item, ResultsBooks } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,20 @@ export class LivrosService {
 
   constructor(private http: HttpClient) { }
 
-  search(typedValue: string): Observable<ResultsBooks> { // valor digitado
+  search(typedValue: string): Observable<Item[]> { // valor digitado, o observable é o que esperamos no retorno
     const params = new HttpParams().append('q', typedValue)
-    return this.http.get(this.API, { params })
+    return this.http.get<ResultsBooks>(this.API, { params }).pipe( // o tipo do get é mais amplo e pega tudo do tipo resultsBooks
+      tap((returnAPI) => console.log('@Fluxo do tap:',returnAPI)),
+      map(result => result.items), // no map, é feito esse 'filtro' do que será retornado
+      tap(result => console.log('@Retorno após o map:',result))
+    )
   }
 }
+
+/*
+Pipe- Função que serve para agrupar múltiplos operadores. Não modifica o observable anterior.
+
+Tap - Operador de serviços públicos. Usado para debugging. Não modifica o observable.
+
+Map - Operador de transformação. Transforma o observable de acordo com a função passada. Retorna um observable modificado.
+*/

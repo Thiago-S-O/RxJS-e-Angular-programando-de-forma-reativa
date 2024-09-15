@@ -1,18 +1,18 @@
-export interface Book { // livro
+export interface Book { // Livro
   title?: string;
   authors?: string[];
   publisher?: string;
-  publishedDate?: Date;
+  publishedDate?: string;
   description?: string;
   previewLink?: string;
-  tumbnail?: string;
+  thumbnail?: ImageLinks;
 }
 
 export interface VolumeInfo {
   title: string;
   authors: string[];
   publisher: string;
-  publishedDate: Date;
+  publishedDate: string;
   description: string;
   pageCount: number;
   printType: string;
@@ -42,7 +42,7 @@ export interface Item {
   volumeInfo: VolumeInfo;
 }
 
-export interface ResultsBooks { // livroResultado
+export interface ResultsBooks { // LivroResultado
   items: Item[];
   totalItems: number;
 }
