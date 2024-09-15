@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LivrosService } from 'src/app/service/livros.service';
 
 @Component({
@@ -6,18 +7,27 @@ import { LivrosService } from 'src/app/service/livros.service';
   templateUrl: './lista-livros.component.html',
   styleUrls: ['./lista-livros.component.css']
 })
-export class ListaLivrosComponent {
+export class ListaLivrosComponent implements OnDestroy {
 
   listaLivros: [];
   searchField: string = '';
+  subscription: Subscription
 
   constructor(private service: LivrosService) { }
 
   searchBook() {
-    this.service.search(this.searchField).subscribe(
-      (returnAPI) => console.log(returnAPI),
-      (error) => console.log(error),
-    )
+    this.subscription = this.service.search(this.searchField).subscribe({
+      next: returnAPI => console.log(returnAPI), // pode ser emitido várias vezes
+      error: error => console.error(error),
+      complete: () => console.log('Observable complete!'),
+      // o complete e o error só podem ser emitidos apenas uma vez
+      // mais detalhes em https://rxjs.dev/guide/observable
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    // ele cancela a inscrição (subscribe), more details in https://rxjs.dev/guide/overview
   }
 }
 

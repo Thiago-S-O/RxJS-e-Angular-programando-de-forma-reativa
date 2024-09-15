@@ -34,3 +34,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Lidar com a biblioteca RxJS;
 - Aplicar o padrão Observer.
 
+## Segunda parte: Ciclo do Observable
+
+- Utilizar os métodos next, error e complete;
+- Desinscrever-se do observable através do unsubscribe;
+- Adequar a resposta da API para o formato necessário.
+
