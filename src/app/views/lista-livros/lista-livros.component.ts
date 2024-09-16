@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Book } from 'src/app/models/interfaces';
+import { Book, Item } from 'src/app/models/interfaces';
+import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivrosService } from 'src/app/service/livros.service';
 
 @Component({
@@ -31,23 +32,34 @@ export class ListaLivrosComponent implements OnDestroy {
     });
   }
 
-  resultBooksForBooks(items): Book[] { // livrosResultadoParaLivros
-    const livros: Book[] = []
+  // resultBooksForBooks(items): Book[] { // livrosResultadoParaLivros
+  //   const livros: Book[] = []
 
-    items.forEach( item => {
-      livros.push(this.livro = {
-        title: item.volumeInfo?.title,
-        authors: item.volumeInfo?.authors,
-        publisher: item.volumeInfo?.publisher,
-        publishedDate: item.volumeInfo?.publishedDate,
-        description: item.volumeInfo?.description,
-        previewLink: item.volumeInfo?.previewLink,
-        thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
-      });
-    });
-    console.log('@retono de livros:',livros[0])
-    return livros;
+  //   items.forEach( item => {
+  //     livros.push(this.livro = {
+  //       title: item.volumeInfo?.title,
+  //       authors: item.volumeInfo?.authors,
+  //       publisher: item.volumeInfo?.publisher,
+  //       publishedDate: item.volumeInfo?.publishedDate,
+  //       description: item.volumeInfo?.description,
+  //       previewLink: item.volumeInfo?.previewLink,
+  //       thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
+  //     });
+  //   });
+  //   console.log('@retono de livros:',livros[0])
+  //   return livros;
+  // }
+
+  resultBooksForBooks(items: Item[]): LivroVolumeInfo[] {
+    return items.map( item => {
+      return new LivroVolumeInfo(item)
+    })
   }
+  /**
+   * outra alternativa, utilizando a classe criada em models com os abjetos
+   * atribuindo a classe livroVolumeInfo a resposabilidade de criar o objeto
+   * e deixa este aquivo mais limpo
+   */
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
