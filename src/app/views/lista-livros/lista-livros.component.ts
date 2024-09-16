@@ -1,11 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, map, Subscription, switchMap, tap } from 'rxjs';
-import { Book, Item } from 'src/app/models/interfaces';
+import { catchError, debounceTime, EMPTY, filter, map, of, Subscription, switchMap, tap, throwError } from 'rxjs';
+import { Book, Item, ResultsBooks } from 'src/app/models/interfaces';
 import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivrosService } from 'src/app/service/livros.service';
 
-const minTime = 1000; // 1 segundos
+const minTime = 500; // 0,5 segundos
 @Component({
   selector: 'app-lista-livros',
   templateUrl: './lista-livros.component.html',
@@ -14,8 +14,25 @@ const minTime = 1000; // 1 segundos
 export class ListaLivrosComponent {
   // listaLivros: Book[];
   searchField = new FormControl();
+  mensageError: string = '';
+  resultsBooks: ResultsBooks;
 
   constructor(private service: LivrosService) {}
+
+  totalsBooks$ = this.searchField.valueChanges.pipe(
+    debounceTime(minTime),
+    filter( typedValue => typedValue.length >= 3 ),
+    tap(() => console.log('@fluxo inicial')),
+    switchMap(
+      (typedValue) => this.service.search(typedValue)
+    ),
+    map( result => this.resultsBooks = result),
+    catchError( error => {
+      console.log(error)
+      return of();
+    })
+  )
+
   // livrosEncontrados, é um observable
   foundBooks$ = this.searchField.valueChanges.pipe(
     // determina um tempo mínimo para aparecer os resultados da pesquisa
@@ -27,10 +44,17 @@ export class ListaLivrosComponent {
       (typedValue) => this.service.search(typedValue)
     ),
     tap( (returnAPI) => console.log('@requisição ao servidor:', returnAPI)),
+    map(result => result.items ?? []),
     map((items) =>
       // this.listaLivros = this.resultBooksForBooks(items)
       this.resultBooksForBooks(items)
-    )
+    ),
+    catchError(erro => {
+      // this.mensageError = 'Opss! Ocorreu um erro.'
+      // return EMPTY
+      console.log(erro)
+      return throwError(() => new Error(this.mensageError = 'Opss! Ocorreu um erro.'))
+    })
   )
 
   resultBooksForBooks(items: Item[]): LivroVolumeInfo[] {
