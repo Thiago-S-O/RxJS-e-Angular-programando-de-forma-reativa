@@ -41,6 +41,15 @@ CurrencyPipe: transforma um número em uma string de moeda, formatada de acordo 
 DecimalPipe: transforma um número em uma string com um ponto decimal, formatado de acordo com as regras de localidade.
 PercentPipe: transforma um número em uma string de porcentagem, formatada de acordo com as regras de localidade.
 
+## operadores RxJs
+switchMap - Operador de Transformação. Cancela requisições de observables anteriores, emitindo valores apenas do Observable projetado mais recentemente.
+
+filter - Operador de filtragem. Filtra os itens emitidos pelo Observable de origem, permitindo apenas aqueles que satisfaçam uma condição especificada.
+
+debounceTime - Operador de filtragem. Retorna um Observable que atrasa as emissões do Observable de origem pelo tempo especificado.
+
+distinctUntilChanged - Operador de filtragem. Retorna um Observable que emite todos os valores enviados pelo observable de origem se forem distintos em comparação com o último valor emitido pelo observable de resultado.
+
 ## Primeira parte: Programação reativa
 
 - Utilizar a arquitetura de componentes de apresentação e componentes inteligentes;
@@ -65,3 +74,10 @@ PercentPipe: transforma um número em uma string de porcentagem, formatada de ac
 - Passar parâmetros e utilizar pipes encadeados;
 - Criar um pipe customizado.
 
+## Quinta parte: Otimizando a busca com o RxJs
+
+- Desenvolver uma busca dinâmica;
+- Utilizar o pipe async;
+- Encadear os operadores switchMap, filter e debounceTime para otimizar a performance da aplicação.
+
+## Última parte: 

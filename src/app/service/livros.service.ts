@@ -15,14 +15,15 @@ export class LivrosService {
   search(typedValue: string): Observable<Item[]> { // valor digitado, o observable é o que esperamos no retorno
     const params = new HttpParams().append('q', typedValue)
     return this.http.get<ResultsBooks>(this.API, { params }).pipe( // o tipo do get é mais amplo e pega tudo do tipo resultsBooks
-      tap((returnAPI) => console.log('@Fluxo do tap:',returnAPI)),
       map(result => result.items), // no map, é feito esse 'filtro' do que será retornado
-      tap(result => console.log('@Retorno após o map:',result))
     )
   }
 }
 
 /*
+// tap((returnAPI) => console.log('@Fluxo do tap:',returnAPI)),
+// tap(result => console.log('@Retorno após o map:',result))
+
 Pipe- Função que serve para agrupar múltiplos operadores. Não modifica o observable anterior.
 
 Tap - Operador de serviços públicos. Usado para debugging. Não modifica o observable.
